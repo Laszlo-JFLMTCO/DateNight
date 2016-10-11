@@ -4,7 +4,8 @@ class Node
     attr_reader   :value,
                   :title
     attr_accessor :left,
-                  :right
+                  :right,
+                  :depth
 
     def initialize (value_in, title_in, left_in = nil, right_in = nil)
         # binding.pry
@@ -12,7 +13,7 @@ class Node
         @title = title_in
         @left = left_in
         @right = right_in
-        @depth = nil
+        @depth = 0
     end
 
     def value

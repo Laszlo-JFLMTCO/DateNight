@@ -23,7 +23,6 @@ def buildingtree(value_input, title_input)
 end
 
 
-
 1.upto(@testinput_number.size-1) do |num|
     buildingtree(@testinput_number[num], @testinput_title[num])
 end

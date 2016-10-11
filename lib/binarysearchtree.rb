@@ -4,12 +4,15 @@ require 'pry'
 
 class BinarySearchTree
     attr_reader :input_list
+                
 
     def initialize(input_list)
         @input_list = input_list
-        @root_number = @input_list[0][0]
+        @root_number = input_list[0][0]
         root_node = Node.new(@input_list[0][0], @input_list[0][1])
-        @binary_tree = {"root" => @root_number, @root_number => root_node}
+        @binary_tree = {}
+        @binary_tree["root"] = @root_number
+        @binary_tree[@root_number] = root_node
     end
 
     def confirm_input
@@ -24,23 +27,26 @@ class BinarySearchTree
         new_node = Node.new(value_input, title_input)
         base_value = @root_number
         base_node = @binary_tree[base_value]
-        comp_result = compare(base_node, new_node)
-        while @binary_tree[base_value].node_to_hash[comp_result] != nil
+        left_right = compare(base_node, new_node)
+        depth_count = 1
+        while @binary_tree[base_value].node_to_hash[left_right] != nil
+            depth_count += 1
             new_node_as_hash = @binary_tree[base_value].node_to_hash
-            base_value = new_node_as_hash[comp_result]
-            comp_result = compare(@binary_tree[base_value], new_node)
+            base_value = new_node_as_hash[left_right]
+            left_right = compare(@binary_tree[base_value], new_node)
+            # binding.pry
         end
-        @binary_tree[base_value].left = new_node.value if comp_result == "left"
-        @binary_tree[base_value].right = new_node.value if comp_result == "right"
+        @binary_tree[base_value].left = new_node.value if left_right == "left"
+        @binary_tree[base_value].right = new_node.value if left_right == "right"
+        new_node.depth = depth_count
         @binary_tree[new_node.value] = new_node
+        # @binary_tree[base_value].depth = depth_count
     end
 
     def create_binary_tree
-        puts "running create_binary_tree"
         1.upto(@input_list.size-1) do |num|
             adding_into_tree(@input_list[num][0], @input_list[num][1])
         end
-        binding.pry
         return true
     end
 
