@@ -1,32 +1,12 @@
 require 'minitest/autorun'
 require './lib/binarysearchtree'
+require './lib/node'
 
 class BinarySearchTreeTest < Minitest::Test
     
     def test_initialize_the_BinarySearchTree_Class_with_empty_input
         assert(test_tree = BinarySearchTree.new)
     end
-
-    # def test_initialize_the_BinarySearchTree_Class
-    #     skip
-    #     test_input_list = [[18, "Terminator"], [25, "Back To The Future"], [65, "Star Wars"], [34, "Cars"], [2, "Spy Game"]]
-    #     test_tree = BinarySearchTree.new(test_input_list)
-    #     assert_equal test_input_list, test_tree.confirm_input
-    # end
-
-    # def test_initialize_the_BinarySearchTree_Class_ROOT_NUMBER
-    #     skip
-    #     test_input_list = [[18, "Terminator"], [25, "Back To The Future"], [65, "Star Wars"], [34, "Cars"], [2, "Spy Game"]]
-    #     test_tree = BinarySearchTree.new(test_input_list)
-    #     assert_equal test_input_list[0][0], test_tree.root_number
-    # end
-
-    # def test_create_binary_tree
-    #     skip
-    #     test_input_list = [[18, "Terminator"], [25, "Back To The Future"], [65, "Star Wars"], [34, "Cars"], [2, "Spy Game"]]
-    #     assert(test_tree = BinarySearchTree.new(test_input_list))
-    #     # assert_equal true, test_tree.create_binary_tree
-    # end
 
     # def test_create_binary_tree_verifying_tree_details_case1
     #     # skip
@@ -119,6 +99,13 @@ class BinarySearchTreeTest < Minitest::Test
         assert_equal expected_return_value, test_tree.min
     end
 
+    def test_create_binary_tree_on_new_class
+        test_input_list = [[18, "Terminator"], [25, "Back To The Future"], [65, "Star Wars"], [34, "Cars"], [2, "Spy Game"]]
+        test_tree = BinarySearchTree.new
+        test_expected_return_value = 5
+        assert_equal test_expected_return_value, test_tree.create_binary_tree(test_input_list)
+    end
+
     def test_loading_test_movies_file_with_empty_string_for_filename
         test_input_file_name = ""
         test_expected_return_value = 0
@@ -155,10 +142,54 @@ class BinarySearchTreeTest < Minitest::Test
         assert_equal test_expected_return_value, test_tree.load(test_input_file_name)
     end
 
-    def test_loading_test_movies_file_with_all_some_already_existing_entries
-        # test_input_file_name = "test_movies.txt"
-        # test_input_list = [[18, "Terminator"], [25, "Back To The Future"], [65, "Star Wars"], [34, "Cars"], [2, "Spy Game"]]
-        # test_tree = BinarySearchTree.new(test_input_list)        
+    def test_add_to_sorted_array_method_adding_to_empty_array
+        test_tree = BinarySearchTree.new
+        test_input_node = Node.new(1, "Test Title 1")
+        test_expected_return_value = [[1, "Test Title 1"]]
+
+        assert_equal test_expected_return_value, test_tree.add_to_sorted_array(test_input_node)
     end
+
+    # def test_add_to_sorted_array_method_adding_to_non_empty_array
+    #     test_tree = BinarySearchTree.new
+    #     test_input_node = Node.new(1, "Test Title 1")
+    #     test_expected_return_value = [[1, "Test Title 1"]]
+
+    #     assert_equal test_expected_return_value, test_tree.add_to_sorted_array(test_input_node)
+    # end
+
+    def test_sort_on_empty_binary_tree
+        test_tree = BinarySearchTree.new        
+        test_expected_return_value = []
+
+        assert_equal test_expected_return_value, test_tree.sort
+        
+    end
+
+    def test_sort_on_non_empty_binary_tree
+        test_input_file_name = "./test/test_movies.txt"
+        test_tree = BinarySearchTree.new        
+        test_tree.load(test_input_file_name)        
+        test_expected_return_value = [[2, "Spy Game"], [25, "Back To The Future"], [34, "Cars"], [65, "Star Wars"]]
+
+        assert_equal test_expected_return_value, test_tree.sort
+    end
+
+    # def test_leaves_on_empty_binary_tree
+    #     test_tree = BinarySearchTree.new        
+    #     test_expected_return_value = 0
+
+    #     assert_equal test_expected_return_value, test_tree.leaves    
+    # end
+
+    # def test_leaves_on_test_movies_list_based_binary_tree
+    #     test_input_file_name = "./test/test_movies.txt"
+    #     test_tree = BinarySearchTree.new        
+    #     test_tree.load(test_input_file_name)        
+    #     test_expected_return_value = 2
+
+    #     assert_equal test_expected_return_value, test_tree.leaves    
+    # end
+
 
 end

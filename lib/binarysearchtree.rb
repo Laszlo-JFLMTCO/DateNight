@@ -3,23 +3,10 @@ require_relative 'supportmethods'
 require 'pry'
 
 class BinarySearchTree
-    #attr_reader :input_list
-                
-    # def initialize(input_list = [])
+
     def initialize
-        # @input_list
-        #@input_list = input_list
-        # @root_number = input_list[0][0]
-        # root_node = Node.new(@input_list[0][0], @input_list[0][1])
         @binary_tree = {}
-        # @binary_tree["root"] = @root_number
-        # @binary_tree[@root_number] = root_node
-
-        #create_binary_tree
-    end
-
-    def root_number
-        @root_number
+        @sorted_array = []
     end
 
     def insert(value_input, title_input)
@@ -129,5 +116,40 @@ class BinarySearchTree
         how_many_entered = create_binary_tree(standardize_input_pairs(input_file_pairs))
         return how_many_entered
     end
+
+    # def
+    # end
+
+    def add_to_sorted_array(input_node)
+        return @sorted_array << [input_node.value, input_node.title] if @sorted_array.size == 0
+        position = 0
+        while position <= @sorted_array.size - 1 and input_node.value > @sorted_array[position][0]
+            position += 1
+        end
+        @sorted_array.insert(position, [input_node.value, input_node.title])
+    end
+
+    def sort_scan(input_node)
+        if input_node.left != nil
+            sort_scan(@binary_tree[input_node.left])
+            add_to_sorted_array(@binary_tree[input_node.left])
+        end
+        if input_node.right != nil
+            sort_scan(@binary_tree[input_node.right])
+            add_to_sorted_array(@binary_tree[input_node.right])
+        end
+        return @sorted_array
+    end
+
+    def sort
+        return [] if @binary_tree == {}
+        @sorted_array = []
+        sort_scan(@binary_tree[@root_number])
+        return @sorted_array
+    end
+
+    # def leaves
+    #     return 0
+    # end
 
 end
