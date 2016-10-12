@@ -84,4 +84,26 @@ class BinarySearchTreeTest < Minitest::Test
         assert_equal expected_return_value, test_tree.min
     end
 
+    def test_loading_test_movies_file_with_empty_string_for_filename
+        test_input_file_name = ""
+        test_expected_return_value = 0
+        test_input_list = [[18, "Terminator"], [25, "Back To The Future"], [65, "Star Wars"], [34, "Cars"], [2, "Spy Game"]]
+        test_tree = BinarySearchTree.new(test_input_list)
+        assert_equal test_expected_return_value, test_tree.load(test_input_file_name)        
+    end
+
+    def test_loading_test_movies_file_with_all_new_entries
+        # skip
+        test_input_file_name = "./test/test_movies.txt"
+        test_input_list = [[18, "Terminator"], [25, "Back To The Future"], [65, "Star Wars"], [34, "Cars"], [2, "Spy Game"]]
+        test_tree = BinarySearchTree.new(test_input_list)        
+        test_tree.load(test_input_file_name)        
+    end
+
+    def test_loading_test_movies_file_with_all_some_already_existing_entries
+        # test_input_file_name = "test_movies.txt"
+        # test_input_list = [[18, "Terminator"], [25, "Back To The Future"], [65, "Star Wars"], [34, "Cars"], [2, "Spy Game"]]
+        # test_tree = BinarySearchTree.new(test_input_list)        
+    end
+
 end

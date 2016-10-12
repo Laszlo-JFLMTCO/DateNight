@@ -14,4 +14,5 @@ depth_of = tree.depth_of(99)
 depth_of2 = tree.depth_of(34)
 max = tree.max
 min = tree.min
+tree.load("movies.txt")
 binding.pry

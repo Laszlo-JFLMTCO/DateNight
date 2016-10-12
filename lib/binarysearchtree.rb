@@ -6,7 +6,7 @@ class BinarySearchTree
     attr_reader :input_list
                 
 
-    def initialize(input_list)
+    def initialize(input_list = [])
         @input_list = input_list
         @root_number = input_list[0][0]
         root_node = Node.new(@input_list[0][0], @input_list[0][1])
@@ -96,9 +96,31 @@ class BinarySearchTree
     def min
         return min_max_search("left")
     end
-    # def insert(inserting_value, inserting_title)
-    #     adding_into_tree(inserting_value, inserting_title)
-    #     return @binary_tree[inserting_value].depth
-    # end
+
+    def standardize_input_pairs(input_file_pairs)
+        clean_input_file_pairs = []
+        input_file_pairs.each do |one_pair|
+            one_pair[0] = one_pair[0].to_i
+            one_pair[1] = one_pair[1].lstrip.rstrip
+            clean_input_file_pairs << one_pair
+        end
+        return clean_input_file_pairs
+    end
+
+    def load(input_filename)
+        # input_filename = "./lib/" + input_filename
+        # binding.pry
+        return 0 if input_filename == ""
+        input_file = IO.readlines(input_filename)
+        # input_file.gsub!(/\r\n?/, "\n")
+        input_file_pairs = []
+        input_file.each do |one_pair|
+            # input_file_pairs << one_pair.gsub(/\n/, "").split(",")
+            input_file_pairs << one_pair.chomp.split(",")
+            binding.pry 
+        end
+        @input_list = standardize_input_pairs(input_file_pairs)
+        binding.pry
+    end
 
 end
