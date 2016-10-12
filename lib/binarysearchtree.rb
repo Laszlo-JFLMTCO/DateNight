@@ -153,6 +153,74 @@ class BinarySearchTree
         return prepare_sort_output(@sorted_array)
     end
 
+    def node_count(node_count_input_node)
+        if node_count_input_node.left !=nil
+            node_count(@binary_tree[node_count_input_node.left])
+            @node_count += 1
+        end
+        if node_count_input_node.right != nil
+            node_count(@binary_tree[node_count_input_node.right])
+            @node_count += 1
+        end
+        return @node_count
+    end
+
+    def health_scan(input_node)
+        if input_node.left !=nil
+            health_scan(@binary_tree[input_node.left])
+            @node_count = 0
+            node_count(@binary_tree[input_node.left])
+            @health_report << [input_node.left, @node_count + 1]
+            @total_node_count += 1
+        end
+        if input_node.right != nil
+            health_scan(@binary_tree[input_node.right])
+            @node_count = 0
+            node_count(@binary_tree[input_node.right])
+            @health_report << [input_node.right, @node_count + 1]
+            @total_node_count += 1
+        end
+        # binding.pry
+        return {"total_node_count" => @total_node_count, "health_scan_report" => @health_report}        
+    end
+
+    def assign_depth_to_health(input_list)
+        input_list_with_depth = []
+        input_list.each do |item|
+            input_list_with_depth << [depth_of(item[0]), item]
+        end
+        return input_list_with_depth
+    end
+
+    def assign_health_calculation(input_list)
+        input_list_with_health_calc = []
+        input_list.each do |item|
+            # binding.pry
+            item_in_percentage = item[1] * 100 / @total_node_count
+            item << item_in_percentage
+            input_list_with_health_calc << item
+        end
+        return input_list_with_health_calc
+    end
+
+    def final_health_report(input_list, depth_requested)
+        health_report = []
+        input_list.each do |item|
+            health_report << item[1] if item[0] == depth_requested
+        end
+        return health_report
+    end
+
+    def health(depth_requested)
+        @health_report = []
+        @total_node_count = 1
+        health_scan(@binary_tree[@root_number])
+        @health_report << [@binary_tree[@root_number].value, @total_node_count]
+        # return assign_health_calculation(assign_depth_to_health(@health_report))
+        return final_health_report(assign_depth_to_health(assign_health_calculation(@health_report)), depth_requested)
+        # return @health_report
+    end
+
     # def leaves
     #     return 0
     # end

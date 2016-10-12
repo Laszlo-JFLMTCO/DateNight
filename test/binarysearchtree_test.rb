@@ -156,12 +156,86 @@ class BinarySearchTreeTest < Minitest::Test
     end
 
     def test_sort_on_non_empty_binary_tree
+        skip
         test_input_file_name = "./test/test_movies.txt"
         test_tree = BinarySearchTree.new        
         test_tree.load(test_input_file_name)        
         test_expected_return_value = [{"Spy Game" => 2}, {"Back To The Future" => 25}, {"Cars" => 34}, {"Star Wars" => 65}]
 
         assert_equal test_expected_return_value, test_tree.sort
+    end
+
+    def test_health0_on_empty_binary_tree
+        skip
+        test_tree = BinarySearchTree.new
+        expected_return_value = []
+        assert_equal expected_return_value, test_tree.health(0)
+    end
+
+    def test_health0_scan_on_test_movies_binary_tree
+        test_input_file_name = "./test/test_movies.txt"
+        test_tree = BinarySearchTree.new        
+        test_tree.load(test_input_file_name)        
+        expected_return_value = [[18, 5, 100]]
+
+        assert_equal expected_return_value, test_tree.health(0)
+    end
+
+    def test_health0_scan_on_Turing_example_based_binary_tree
+        test_tree = BinarySearchTree.new        
+        test_tree.insert(98, "Animals United")
+        test_tree.insert(58, "Armageddon")
+        test_tree.insert(36, "Bill & Ted's Bogus Journey")
+        test_tree.insert(93, "Bill & Ted's Excellent Adventure")
+        test_tree.insert(86, "Charlie's Angels")
+        test_tree.insert(38, "Charlie's Country")
+        test_tree.insert(69, "Collateral Damage")
+        expected_return_value = [[98, 7, 100]]
+
+        assert_equal expected_return_value, test_tree.health(0)
+    end
+
+    def test_health1_scan_on_Turing_example_based_binary_tree
+        test_tree = BinarySearchTree.new        
+        test_tree.insert(98, "Animals United")
+        test_tree.insert(58, "Armageddon")
+        test_tree.insert(36, "Bill & Ted's Bogus Journey")
+        test_tree.insert(93, "Bill & Ted's Excellent Adventure")
+        test_tree.insert(86, "Charlie's Angels")
+        test_tree.insert(38, "Charlie's Country")
+        test_tree.insert(69, "Collateral Damage")
+        expected_return_value = [[58, 6, 85]]
+
+        assert_equal expected_return_value, test_tree.health(1)
+    end
+
+    def test_health2_scan_on_Turing_example_based_binary_tree
+        test_tree = BinarySearchTree.new        
+        test_tree.insert(98, "Animals United")
+        test_tree.insert(58, "Armageddon")
+        test_tree.insert(36, "Bill & Ted's Bogus Journey")
+        test_tree.insert(93, "Bill & Ted's Excellent Adventure")
+        test_tree.insert(86, "Charlie's Angels")
+        test_tree.insert(38, "Charlie's Country")
+        test_tree.insert(69, "Collateral Damage")
+        expected_return_value = [[36, 2, 28], [93, 3, 42]]
+
+        assert_equal expected_return_value, test_tree.health(2)
+    end
+
+    def test_assign_depth_to_health_Turing_example_based_binary_tree
+        skip
+        test_tree = BinarySearchTree.new        
+        test_tree.insert(98, "Animals United")
+        test_tree.insert(58, "Armageddon")
+        test_tree.insert(36, "Bill & Ted's Bogus Journey")
+        test_tree.insert(93, "Bill & Ted's Excellent Adventure")
+        test_tree.insert(86, "Charlie's Angels")
+        test_tree.insert(38, "Charlie's Country")
+        test_tree.insert(69, "Collateral Damage")
+        expected_return_value = []
+
+        assert_equal expected_return_value, test_tree.health(0)
     end
 
     # def test_leaves_on_empty_binary_tree
