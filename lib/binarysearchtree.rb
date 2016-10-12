@@ -3,22 +3,19 @@ require_relative 'supportmethods'
 require 'pry'
 
 class BinarySearchTree
-    attr_reader :input_list
+    #attr_reader :input_list
                 
-
-    def initialize(input_list = [])
-        @input_list = input_list
-        @root_number = input_list[0][0]
-        root_node = Node.new(@input_list[0][0], @input_list[0][1])
+    # def initialize(input_list = [])
+    def initialize
+        # @input_list
+        #@input_list = input_list
+        # @root_number = input_list[0][0]
+        # root_node = Node.new(@input_list[0][0], @input_list[0][1])
         @binary_tree = {}
-        @binary_tree["root"] = @root_number
-        @binary_tree[@root_number] = root_node
+        # @binary_tree["root"] = @root_number
+        # @binary_tree[@root_number] = root_node
 
-        create_binary_tree
-    end
-
-    def confirm_input
-        @input_list
+        #create_binary_tree
     end
 
     def root_number
@@ -26,45 +23,48 @@ class BinarySearchTree
     end
 
     def insert(value_input, title_input)
-        new_node = Node.new(value_input, title_input)
-        base_value = @root_number
-        base_node = @binary_tree[base_value]
-        left_right = compare(base_node, new_node)
-        depth_count = 1
-        while @binary_tree[base_value].node_to_hash[left_right] != nil
-            depth_count += 1
-            new_node_as_hash = @binary_tree[base_value].node_to_hash
-            base_value = new_node_as_hash[left_right]
-            left_right = compare(@binary_tree[base_value], new_node)
+        if @binary_tree == {}
+            new_node = Node.new(value_input, title_input)
+            @binary_tree[new_node.value] = new_node
+            @root_number = new_node.value
+            depth_count = 0
+        else
+            new_node = Node.new(value_input, title_input)
+            base_value = @root_number
+            base_node = @binary_tree[base_value]
+            left_right = compare(base_node, new_node)
+            depth_count = 1
+            while @binary_tree[base_value].node_to_hash[left_right] != nil
+                depth_count += 1
+                new_node_as_hash = @binary_tree[base_value].node_to_hash
+                base_value = new_node_as_hash[left_right]
+                left_right = compare(@binary_tree[base_value], new_node)
+            end
+            @binary_tree[base_value].left = new_node.value if left_right == "left"
+            @binary_tree[base_value].right = new_node.value if left_right == "right"
+            new_node.depth = depth_count
+            @binary_tree[new_node.value] = new_node
         end
-        @binary_tree[base_value].left = new_node.value if left_right == "left"
-        @binary_tree[base_value].right = new_node.value if left_right == "right"
-        new_node.depth = depth_count
-        @binary_tree[new_node.value] = new_node
-        # @binary_tree[base_value].depth = depth_count
         return depth_count
     end
 
-    def create_binary_tree
-        1.upto(@input_list.size-1) do |num|
-            insert(@input_list[num][0], @input_list[num][1])
-        end
-        return true
-    end
-
     def search_value_in_tree(input_value,title_input)
-        new_node = Node.new(input_value, title_input)
-        base_value = @root_number
-        base_node = @binary_tree[base_value]
-        left_right = compare(base_node, new_node)
-        depth_count = 1
-        while @binary_tree[base_value].node_to_hash[left_right] != nil and @binary_tree[base_value].value != new_node.value
-            depth_count += 1
-            new_node_as_hash = @binary_tree[base_value].node_to_hash
-            base_value = new_node_as_hash[left_right]
-            left_right = compare(@binary_tree[base_value], new_node)
+        if @binary_tree == {}
+            found_or_not = false
+        else
+            new_node = Node.new(input_value, title_input)
+            base_value = @root_number
+            base_node = @binary_tree[base_value]
+            left_right = compare(base_node, new_node)
+            depth_count = 1
+            while @binary_tree[base_value].node_to_hash[left_right] != nil and @binary_tree[base_value].value != new_node.value
+                depth_count += 1
+                new_node_as_hash = @binary_tree[base_value].node_to_hash
+                base_value = new_node_as_hash[left_right]
+                left_right = compare(@binary_tree[base_value], new_node)
+            end
+            found_or_not = !(@binary_tree[base_value].value != new_node.value)
         end
-        found_or_not = !(@binary_tree[base_value].value != new_node.value)
         return [found_or_not, depth_count - 1] if found_or_not
         return [found_or_not, nil] if !found_or_not
     end
@@ -74,11 +74,12 @@ class BinarySearchTree
     end
 
     def depth_of(input_value)
-        return search_value_in_tree(input_value, "")[1]
+        return search_value_in_tree(input_value, "")[1] if search_value_in_tree(input_value, "")[0]
+        return nil if !search_value_in_tree(input_value, "")[0]
     end
 
     def min_max_search(tilting_left_right)
-        base_node = @binary_tree[@binary_tree["root"]]
+        base_node = @binary_tree[@root_number]
         base_value = base_node.value
         min_max_value = base_node.value
         while @binary_tree[base_value].node_to_hash[tilting_left_right] != nil
@@ -107,20 +108,26 @@ class BinarySearchTree
         return clean_input_file_pairs
     end
 
+    def create_binary_tree(input_list)
+        how_many_entered = 0
+        input_list.each do |num|
+            if !include?(num[0])
+                insert(num[0], num[1])
+                how_many_entered += 1
+            end
+        end
+        return how_many_entered
+    end
+
     def load(input_filename)
-        # input_filename = "./lib/" + input_filename
-        # binding.pry
         return 0 if input_filename == ""
         input_file = IO.readlines(input_filename)
-        # input_file.gsub!(/\r\n?/, "\n")
         input_file_pairs = []
         input_file.each do |one_pair|
-            # input_file_pairs << one_pair.gsub(/\n/, "").split(",")
             input_file_pairs << one_pair.chomp.split(",")
-            binding.pry 
         end
-        @input_list = standardize_input_pairs(input_file_pairs)
-        binding.pry
+        how_many_entered = create_binary_tree(standardize_input_pairs(input_file_pairs))
+        return how_many_entered
     end
 
 end
