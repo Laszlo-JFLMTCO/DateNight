@@ -13,6 +13,8 @@ class BinarySearchTree
         @binary_tree = {}
         @binary_tree["root"] = @root_number
         @binary_tree[@root_number] = root_node
+
+        create_binary_tree
     end
 
     def confirm_input
@@ -40,7 +42,7 @@ class BinarySearchTree
         new_node.depth = depth_count
         @binary_tree[new_node.value] = new_node
         # @binary_tree[base_value].depth = depth_count
-        return new_node.depth
+        return depth_count
     end
 
     def create_binary_tree
@@ -50,6 +52,50 @@ class BinarySearchTree
         return true
     end
 
+    def search_value_in_tree(input_value,title_input)
+        new_node = Node.new(input_value, title_input)
+        base_value = @root_number
+        base_node = @binary_tree[base_value]
+        left_right = compare(base_node, new_node)
+        depth_count = 1
+        while @binary_tree[base_value].node_to_hash[left_right] != nil and @binary_tree[base_value].value != new_node.value
+            depth_count += 1
+            new_node_as_hash = @binary_tree[base_value].node_to_hash
+            base_value = new_node_as_hash[left_right]
+            left_right = compare(@binary_tree[base_value], new_node)
+        end
+        found_or_not = !(@binary_tree[base_value].value != new_node.value)
+        return [found_or_not, depth_count - 1] if found_or_not
+        return [found_or_not, nil] if !found_or_not
+    end
+
+    def include?(input_value)
+        return search_value_in_tree(input_value, "")[0]
+    end
+
+    def depth_of(input_value)
+        return search_value_in_tree(input_value, "")[1]
+    end
+
+    def min_max_search(tilting_left_right)
+        base_node = @binary_tree[@binary_tree["root"]]
+        base_value = base_node.value
+        min_max_value = base_node.value
+        while @binary_tree[base_value].node_to_hash[tilting_left_right] != nil
+            base_value = @binary_tree[base_value].node_to_hash[tilting_left_right]
+            min_max_value = @binary_tree[base_value].value if min_max_value < @binary_tree[base_value].value and tilting_left_right == "right"
+            min_max_value = @binary_tree[base_value].value if min_max_value > @binary_tree[base_value].value and tilting_left_right == "left"
+        end
+        return {@binary_tree[min_max_value].title => @binary_tree[min_max_value].value}
+    end
+
+    def max
+        return min_max_search("right")
+    end
+
+    def min
+        return min_max_search("left")
+    end
     # def insert(inserting_value, inserting_title)
     #     adding_into_tree(inserting_value, inserting_title)
     #     return @binary_tree[inserting_value].depth
