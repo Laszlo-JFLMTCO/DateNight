@@ -18,4 +18,9 @@ depth_of2 = tree.depth_of(34)
 max = tree.max
 min = tree.min
 sorted = tree.sort
+health0 = tree.health(0)
+health1 = tree.health(1)
+health2 = tree.health(2)
+health3 = tree.health(3)
 binding.pry
+
