@@ -117,8 +117,13 @@ class BinarySearchTree
         return how_many_entered
     end
 
-    # def
-    # end
+    def prepare_sort_output(input_array)
+        temp_array = []
+        input_array.each do |one_pair|
+            temp_array << {one_pair[1] => one_pair[0]}
+        end
+        return temp_array
+    end
 
     def add_to_sorted_array(input_node)
         return @sorted_array << [input_node.value, input_node.title] if @sorted_array.size == 0
@@ -145,7 +150,7 @@ class BinarySearchTree
         return [] if @binary_tree == {}
         @sorted_array = []
         sort_scan(@binary_tree[@root_number])
-        return @sorted_array
+        return prepare_sort_output(@sorted_array)
     end
 
     # def leaves

@@ -8,17 +8,6 @@ class BinarySearchTreeTest < Minitest::Test
         assert(test_tree = BinarySearchTree.new)
     end
 
-    # def test_create_binary_tree_verifying_tree_details_case1
-    #     # skip
-    #     test_input_list = [[18, "Terminator"], [25, "Back To The Future"], [65, "Star Wars"], [34, "Cars"], [2, "Spy Game"]]
-    #     test_tree = BinarySearchTree.new(test_input_list)
-    #     expected_value = 2
-    #     expected_title = "Cars"
-    #     expected_left = nil
-    #     expected_right = nil
-    #     assert_equal true, test_tree.create_binary_tree
-    # end
-
     def test_inserting_new_value_title_pair_into_empty_binary_tree
         inserting_value = 18
         inserting_title = "Terminator"
@@ -150,13 +139,13 @@ class BinarySearchTreeTest < Minitest::Test
         assert_equal test_expected_return_value, test_tree.add_to_sorted_array(test_input_node)
     end
 
-    # def test_add_to_sorted_array_method_adding_to_non_empty_array
-    #     test_tree = BinarySearchTree.new
-    #     test_input_node = Node.new(1, "Test Title 1")
-    #     test_expected_return_value = [[1, "Test Title 1"]]
+    def test_prepare_sort_output_method
+        test_tree = BinarySearchTree.new        
+        test_input_list = [[1, "Title1"], [2, "Title2"]]
+        test_expected_return_value = [{"Title1" => 1}, {"Title2" => 2}]
 
-    #     assert_equal test_expected_return_value, test_tree.add_to_sorted_array(test_input_node)
-    # end
+        assert_equal test_expected_return_value, test_tree.prepare_sort_output(test_input_list)        
+    end
 
     def test_sort_on_empty_binary_tree
         test_tree = BinarySearchTree.new        
@@ -170,7 +159,7 @@ class BinarySearchTreeTest < Minitest::Test
         test_input_file_name = "./test/test_movies.txt"
         test_tree = BinarySearchTree.new        
         test_tree.load(test_input_file_name)        
-        test_expected_return_value = [[2, "Spy Game"], [25, "Back To The Future"], [34, "Cars"], [65, "Star Wars"]]
+        test_expected_return_value = [{"Spy Game" => 2}, {"Back To The Future" => 25}, {"Cars" => 34}, {"Star Wars" => 65}]
 
         assert_equal test_expected_return_value, test_tree.sort
     end
