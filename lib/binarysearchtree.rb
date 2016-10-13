@@ -7,6 +7,7 @@ class BinarySearchTree
     def initialize
         @binary_tree = {}
         @sorted_array = []
+        @root_number = 0
     end
 
     def insert(value_input, title_input)
@@ -29,7 +30,6 @@ class BinarySearchTree
             end
             @binary_tree[base_value].left = new_node.value if left_right == "left"
             @binary_tree[base_value].right = new_node.value if left_right == "right"
-            new_node.depth = depth_count
             @binary_tree[new_node.value] = new_node
         end
         return depth_count
@@ -217,7 +217,6 @@ class BinarySearchTree
             @health_report << [@binary_tree[@root_number].value, @total_node_count]
             return final_health_report(assign_depth_to_health(assign_health_calculation(@health_report)), depth_requested)
         else
-            binding.pry
             return []
         end
     end

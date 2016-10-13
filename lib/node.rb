@@ -4,8 +4,7 @@ class Node
     attr_reader   :value,
                   :title
     attr_accessor :left,
-                  :right,
-                  :depth
+                  :right
 
     def initialize (value_in, title_in, left_in = nil, right_in = nil)
         # binding.pry
@@ -13,23 +12,6 @@ class Node
         @title = title_in
         @left = left_in
         @right = right_in
-        @depth = 0
-    end
-
-    def value
-        @value
-    end
-
-    def left
-        @left
-    end
-
-    def right
-        @right
-    end
-
-    def depth
-        @depth
     end
 
     def node_to_hash
@@ -40,12 +22,5 @@ class Node
         node_to_hash["right"] = @right
         return node_to_hash
     end
-
-    # def hash_to_node(input_as_hash)
-    #     @value = input_as_hash["value"]
-    #     @title = input_as_hash["title"]
-    #     @left = input_as_hash["left"]
-    #     @right = input_as_hash["right"]        
-    # end
 
 end

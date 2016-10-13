@@ -4,6 +4,17 @@ require './lib/node'
 
 class BinarySearchTreeTest < Minitest::Test
     
+    def test_node_creation_with_minimal_number_of_arguments
+        test_value_input = 1
+        test_title_input = "Title1"
+        test_node = Node.new(test_value_input, test_title_input)
+
+        assert_equal test_value_input, test_node.value
+        assert_equal test_title_input, test_node.title
+        assert_equal nil, test_node.left
+        assert_equal nil, test_node.right
+    end
+    
     def test_initialize_the_BinarySearchTree_Class_with_empty_input
         assert(test_tree = BinarySearchTree.new)
     end

@@ -1,7 +1,4 @@
-# gem 'minitest', '~> 5.2'
 require 'minitest/autorun'
-# require 'minitest/pride'
-# require 'minitest/homework'
 require './lib/node'
 
 class NodeTest < Minitest::Test
@@ -13,7 +10,6 @@ class NodeTest < Minitest::Test
         assert_equal expected_title, testnode.title
         assert_equal nil, testnode.left
         assert_equal nil, testnode.right
-        assert_equal nil, testnode.depth
     end
 
     def test_node_initialization_complete
@@ -26,7 +22,6 @@ class NodeTest < Minitest::Test
         assert_equal expected_title, testnode.title
         assert_equal expected_left, testnode.left
         assert_equal expected_right, testnode.right
-        assert_equal nil, testnode.depth
     end
 
     def test_node_with_various_input_values_1
@@ -37,7 +32,6 @@ class NodeTest < Minitest::Test
         assert_equal expected_title, testnode.title
         assert_equal nil, testnode.left
         assert_equal nil, testnode.right
-        assert_equal nil, testnode.depth
     end
 
     def test_node_with_various_input_values_2
@@ -51,7 +45,6 @@ class NodeTest < Minitest::Test
         assert_equal expected_title, testnode.title
         assert_equal expected_left, testnode.left
         assert_equal expected_right, testnode.right
-        assert_equal nil, testnode.depth
     end
 
     def test_node_with_various_input_values_3
@@ -65,7 +58,6 @@ class NodeTest < Minitest::Test
         assert_equal expected_title, testnode.title
         assert_equal expected_left, testnode.left
         assert_equal expected_right, testnode.right
-        assert_equal nil, testnode.depth
     end
 
     def test_node_to_hash_conversion_case1
@@ -77,7 +69,6 @@ class NodeTest < Minitest::Test
         assert_equal expected_title, testnode_as_hash["title"]
         assert_equal nil, testnode_as_hash["left"]
         assert_equal nil, testnode_as_hash["right"]
-        assert_equal nil, testnode.depth
     end
 
     def test_node_to_hash_conversion_case2
@@ -91,7 +82,6 @@ class NodeTest < Minitest::Test
         assert_equal expected_title, testnode_as_hash["title"]
         assert_equal expected_left, testnode_as_hash["left"]
         assert_equal expected_right, testnode_as_hash["right"]
-        assert_equal nil, testnode.depth
     end    
 
 end
