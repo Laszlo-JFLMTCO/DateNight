@@ -221,8 +221,21 @@ class BinarySearchTree
         end
     end
 
-    # def leaves
-    #     return 0
-    # end
+    def leaves_counter(input_node)
+        if input_node.left != nil
+            leaves_counter(@binary_tree[input_node.left])
+        end
+        if input_node.right != nil
+            leaves_counter(@binary_tree[input_node.right])
+        end
+        @leaves_counter += 1 if input_node.left == nil and input_node.right == nil
+        return @leaves_counter
+    end
+
+    def leaves
+        return 0 if @binary_tree == {}
+        @leaves_counter = 0
+        return leaves_counter(@binary_tree[@root_number])
+    end
 
 end

@@ -43,4 +43,5 @@ health1 = tree.health(1)
 # => [[58, 6, 85]]
 health2 = tree.health(2)
 # => [[36, 2, 28], [93, 3, 42]]
+leaves = tree.leaves
 binding.pry

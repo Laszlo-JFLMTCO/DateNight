@@ -232,21 +232,37 @@ class BinarySearchTreeTest < Minitest::Test
         assert_equal expected_return_value, test_tree.health(2)
     end
 
-    # def test_leaves_on_empty_binary_tree
-    #     test_tree = BinarySearchTree.new        
-    #     test_expected_return_value = 0
+    def test_leaves_on_empty_binary_tree
+        test_tree = BinarySearchTree.new        
+        test_expected_return_value = 0
 
-    #     assert_equal test_expected_return_value, test_tree.leaves    
-    # end
+        assert_equal test_expected_return_value, test_tree.leaves    
+    end
 
-    # def test_leaves_on_test_movies_list_based_binary_tree
-    #     test_input_file_name = "./test/test_movies.txt"
-    #     test_tree = BinarySearchTree.new        
-    #     test_tree.load(test_input_file_name)        
-    #     test_expected_return_value = 2
+    def test_leaves_on_test_movies_list_based_binary_tree
+        test_input_file_name = "./test/test_movies.txt"
+        test_tree = BinarySearchTree.new        
+        test_tree.load(test_input_file_name)        
+        test_expected_return_value = 2
 
-    #     assert_equal test_expected_return_value, test_tree.leaves    
-    # end
+        assert_equal test_expected_return_value, test_tree.leaves    
+    end
 
+    def test_leaves_on_Turing_test_case_with_inserting_Title99
+        test_tree = BinarySearchTree.new        
+        test_tree.insert(98, "Animals United")
+        test_tree.insert(58, "Armageddon")
+        test_tree.insert(36, "Bill & Ted's Bogus Journey")
+        test_tree.insert(93, "Bill & Ted's Excellent Adventure")
+        test_tree.insert(86, "Charlie's Angels")
+        test_tree.insert(38, "Charlie's Country")
+        test_tree.insert(69, "Collateral Damage")
+        test_expected_return_value = 2
+        assert_equal test_expected_return_value, test_tree.leaves
+
+        test_tree.insert(99, "Title99")
+        test_expected_return_value = 3
+        assert_equal test_expected_return_value, test_tree.leaves
+    end
 
 end
