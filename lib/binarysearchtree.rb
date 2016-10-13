@@ -50,7 +50,7 @@ class BinarySearchTree
                 base_value = new_node_as_hash[left_right]
                 left_right = compare(@binary_tree[base_value], new_node)
             end
-            found_or_not = !(@binary_tree[base_value].value != new_node.value)
+            found_or_not = @binary_tree[base_value].value == new_node.value
         end
         return [found_or_not, depth_count - 1] if found_or_not
         return [found_or_not, nil] if !found_or_not
