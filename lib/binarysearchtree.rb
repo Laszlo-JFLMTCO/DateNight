@@ -180,7 +180,6 @@ class BinarySearchTree
             @health_report << [input_node.right, @node_count + 1]
             @total_node_count += 1
         end
-        # binding.pry
         return {"total_node_count" => @total_node_count, "health_scan_report" => @health_report}        
     end
 
@@ -195,7 +194,6 @@ class BinarySearchTree
     def assign_health_calculation(input_list)
         input_list_with_health_calc = []
         input_list.each do |item|
-            # binding.pry
             item_in_percentage = item[1] * 100 / @total_node_count
             item << item_in_percentage
             input_list_with_health_calc << item
@@ -212,13 +210,16 @@ class BinarySearchTree
     end
 
     def health(depth_requested)
-        @health_report = []
-        @total_node_count = 1
-        health_scan(@binary_tree[@root_number])
-        @health_report << [@binary_tree[@root_number].value, @total_node_count]
-        # return assign_health_calculation(assign_depth_to_health(@health_report))
-        return final_health_report(assign_depth_to_health(assign_health_calculation(@health_report)), depth_requested)
-        # return @health_report
+        if @binary_tree != {}
+            @health_report = []
+            @total_node_count = 1
+            health_scan(@binary_tree[@root_number])
+            @health_report << [@binary_tree[@root_number].value, @total_node_count]
+            return final_health_report(assign_depth_to_health(assign_health_calculation(@health_report)), depth_requested)
+        else
+            binding.pry
+            return []
+        end
     end
 
     # def leaves
